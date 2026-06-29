@@ -21,17 +21,11 @@ class TicketsService {
     return {
       id: dto.id,
       title: dto.title,
-      description: dto.description,
-      departmentId: dto.fkDepartmentId,
       departmentTitle: dto.departmentTitle,
       statusId: dto.fkStatusId,
       statusLabel: getTicketStatusLabel(dto.fkStatusId),
-      orderId: dto.fkOrderId,
-      priorityId: dto.fkPriorityId,
-      createdAt: new Date(dto.createDateTime),
       createdAtFa: dto.persianCreateDate,
       modifiedAtFa: dto.persianModifiedDateTime,
-      isActive: dto.isActive,
     };
   }
 
