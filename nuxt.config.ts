@@ -5,13 +5,17 @@ export default defineNuxtConfig({
   compatibilityDate: "2026-06-29",
   devtools: { enabled: true },
   modules: ["@nuxt/eslint", "@nuxtjs/tailwindcss", "@pinia/nuxt"],
-  css: ["~/assets/css/tailwind.css"],
+  css: ["~/assets/css/payda.css", "~/assets/css/tailwind.css"],
   routeRules: {
     "/dashboard": { redirect: "/dashboard/tickets" },
   },
   imports: {
     dirs: ["modules/**/composables"],
   },
+  components: [
+    { path: "~/components", pathPrefix: false },
+    { path: "~/modules/tickets/components", pathPrefix: false },
+  ],
   runtimeConfig: {
     public: {
       apiBase: process.env.NUXT_PUBLIC_API_BASE || DEFAULT_API_BASE_URL,

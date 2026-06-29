@@ -7,13 +7,14 @@ export interface TicketModel {
   departmentTitle: string;
 
   statusId: number;
-  statusTitle: string;
+  statusLabel: string;
 
   orderId: number | null;
   priorityId: number;
 
   createdAt: Date;
   createdAtFa: string;
+  modifiedAtFa: string;
 
   isActive: boolean;
 }
