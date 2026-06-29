@@ -1,10 +1,16 @@
 import { debounce } from "lodash";
+import type { LocationQueryRaw } from "vue-router";
 import type { PaginatedResponse } from "~/core/api/pagination";
 import { DEFAULT_PAGE } from "~/core/constants";
 import { ticketsService } from "../services/tickets.service";
 import type { TicketModel } from "../types/ticket.model";
 import type { TicketsQueryParams } from "../types/ticket.query";
 import { formatTicketDisplayId, resolveTicketDisplayDate } from "../utils/ticket-display";
+import {
+  buildTicketsRouteQuery,
+  isSameTicketsRouteQuery,
+  parseTicketsRouteQuery,
+} from "../utils/ticket-route-query";
 import type { DataTableRow } from "~/components/ui/data-table.types";
 
 type TicketsPagination = Omit<PaginatedResponse<TicketModel>, "items">;
@@ -13,6 +19,9 @@ const SEARCH_DEBOUNCE_MS = 300;
 
 export function useTickets() {
   const config = useRuntimeConfig();
+  const route = useRoute();
+  const router = useRouter();
+
   const tickets = ref<TicketModel[]>([]);
   const pagination = ref<TicketsPagination | null>(null);
   const loading = ref(false);
@@ -20,6 +29,7 @@ export function useTickets() {
   const search = ref("");
   const selectedStatusId = ref<number | null>(null);
   const page = ref(DEFAULT_PAGE);
+  const isSyncingRoute = ref(false);
 
   const perPage = computed(() => config.public.defaultPageSize);
 
@@ -34,6 +44,40 @@ export function useTickets() {
       dateFa: resolveTicketDisplayDate(ticket.createdAtFa, ticket.modifiedAtFa),
     })),
   );
+
+  function getRouteState() {
+    return {
+      search: search.value,
+      statusId: selectedStatusId.value,
+      page: page.value,
+    };
+  }
+
+  function applyRouteQuery(query: LocationQueryRaw = route.query) {
+    const routeState = parseTicketsRouteQuery(query);
+    search.value = routeState.search;
+    selectedStatusId.value = routeState.statusId;
+    page.value = routeState.page;
+  }
+
+  async function syncRouteQuery() {
+    const nextQuery = buildTicketsRouteQuery(getRouteState());
+
+    if (isSameTicketsRouteQuery(route.query, getRouteState())) {
+      return;
+    }
+
+    isSyncingRoute.value = true;
+
+    try {
+      await router.replace({
+        path: route.path,
+        query: nextQuery,
+      });
+    } finally {
+      isSyncingRoute.value = false;
+    }
+  }
 
   function buildQueryParams(overrides: Partial<TicketsQueryParams> = {}) {
     const params: TicketsQueryParams = {
@@ -53,7 +97,11 @@ export function useTickets() {
     return params;
   }
 
-  async function fetchTickets(overrides: Partial<TicketsQueryParams> = {}) {
+  async function fetchTickets(
+    overrides: Partial<TicketsQueryParams> = {},
+    options: { syncRoute?: boolean } = {},
+  ) {
+    const { syncRoute = true } = options;
     loading.value = true;
     error.value = null;
 
@@ -74,7 +122,13 @@ export function useTickets() {
         totalPages: response.totalPages,
       };
       page.value = response.page;
+
+      if (syncRoute) {
+        await syncRouteQuery();
+      }
     } catch (err) {
+      tickets.value = [];
+      pagination.value = null;
       error.value =
         err instanceof Error ? err.message : "Failed to fetch tickets";
     } finally {
@@ -82,22 +136,54 @@ export function useTickets() {
     }
   }
 
-  const debouncedFetchTickets = debounce(() => {
-    fetchTickets({ page: DEFAULT_PAGE });
+  const debouncedFetchTickets = debounce(async () => {
+    page.value = DEFAULT_PAGE;
+    await fetchTickets({ page: DEFAULT_PAGE });
   }, SEARCH_DEBOUNCE_MS);
 
-  function setSearch(value: string) {
+  function initFromRoute() {
+    applyRouteQuery();
+  }
+
+  async function setSearch(value: string) {
     search.value = value;
-    debouncedFetchTickets();
+    await debouncedFetchTickets();
   }
 
-  function setSelectedStatusId(value: number | null) {
+  async function setSelectedStatusId(value: number | null) {
     selectedStatusId.value = value;
-    fetchTickets({ page: DEFAULT_PAGE });
+    await fetchTickets({ page: DEFAULT_PAGE });
   }
 
-  function setPage(nextPage: number) {
-    fetchTickets({ page: nextPage });
+  async function setPage(nextPage: number) {
+    await fetchTickets({ page: nextPage });
+  }
+
+  watch(
+    () => route.query,
+    async (query) => {
+      if (
+        isSyncingRoute.value ||
+        isSameTicketsRouteQuery(query, getRouteState())
+      ) {
+        return;
+      }
+
+      applyRouteQuery(query);
+      await fetchTickets({}, { syncRoute: false });
+    },
+  );
+
+  async function retryFetch() {
+    await fetchTickets();
+  }
+
+  function handleCreateTicket() {
+    console.log("Create new ticket clicked");
+  }
+
+  function handleViewTicket(ticketId: number) {
+    console.log("Ticket clicked:", ticketId);
   }
 
   return {
@@ -109,9 +195,13 @@ export function useTickets() {
     search,
     selectedStatusId,
     page,
+    initFromRoute,
     fetchTickets,
+    retryFetch,
     setSearch,
     setSelectedStatusId,
     setPage,
+    handleCreateTicket,
+    handleViewTicket,
   };
 }

@@ -50,17 +50,20 @@ function isActive(filter: TicketStatusFilter) {
 
     <div class="relative w-full md:w-64">
       <input
-        type="text"
+        type="search"
+        name="ticket-search"
+        autocomplete="off"
         :value="search"
         placeholder="جستجو در تیکت‌ها..."
-        class="w-full rounded-2xl border border-white/60 bg-white/40 px-5 py-3 text-[11px] font-bold outline-none transition-all focus:border-primary-500/50 dark:border-white/10 dark:bg-white/5"
+        class="w-full cursor-text rounded-2xl border border-white/60 bg-white/40 py-3 pl-11 pr-5 text-[11px] font-bold text-gray-900 caret-primary-500 outline-none transition-all placeholder:text-gray-400 focus:border-primary-500/50 dark:border-white/10 dark:bg-white/5 dark:text-white dark:placeholder:text-gray-500"
         @input="onSearchInput"
       >
       <svg
-        class="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400"
+        class="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400"
         fill="none"
         stroke="currentColor"
         viewBox="0 0 24 24"
+        aria-hidden="true"
       >
         <path
           stroke-linecap="round"
