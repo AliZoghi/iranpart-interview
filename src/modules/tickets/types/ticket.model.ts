@@ -1,19 +1,19 @@
 export interface TicketModel {
-  id: number
-  title: string
-  description: string
+  id: number;
+  title: string;
+  description: string;
 
-  departmentId: number
-  departmentTitle: string
+  departmentId: number;
+  departmentTitle: string;
 
-  statusId: number
-  statusTitle: string
+  statusId: number;
+  statusTitle: string;
 
-  orderId: number | null
-  priorityId: number
+  orderId: number | null;
+  priorityId: number;
 
-  createdAt: Date
-  createdAtFa: string
+  createdAt: Date;
+  createdAtFa: string;
 
-  isActive: boolean
+  isActive: boolean;
 }

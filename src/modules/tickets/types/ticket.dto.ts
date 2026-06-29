@@ -1,27 +1,27 @@
 export interface TicketDto {
-  id: number
-  title: string
-  description: string
+  id: number;
+  title: string;
+  description: string;
 
-  fkDepartmentId: number
-  departmentTitle: string
+  fkDepartmentId: number;
+  departmentTitle: string;
 
-  fkStatusId: number
-  statusTitle: string
+  fkStatusId: number;
+  statusTitle: string;
 
-  fkOrderId: number | null
-  fkPriorityId: number
+  fkOrderId: number | null;
+  fkPriorityId: number;
 
-  fkRegisterPersonId: number
+  fkRegisterPersonId: number;
 
-  messages: any[]
+  messages: any[];
 
-  isActive: boolean
-  isTrashed: boolean
+  isActive: boolean;
+  isTrashed: boolean;
 
-  createDateTime: string
-  persianCreateDate: string
+  createDateTime: string;
+  persianCreateDate: string;
 
-  modifiedDateTime: string
-  persianModifiedDateTime: string
+  modifiedDateTime: string;
+  persianModifiedDateTime: string;
 }

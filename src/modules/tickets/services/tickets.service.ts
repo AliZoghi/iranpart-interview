@@ -1,14 +1,14 @@
-import type { PaginatedResponse } from '~/core/api/pagination'
-import { ticketsApi } from '../api/tickets.api'
-import type { TicketDto } from '../types/ticket.dto'
-import type { TicketModel } from '../types/ticket.model'
+import type { PaginatedResponse } from "~/core/api/pagination";
+import { ticketsApi } from "../api/tickets.api";
+import type { TicketDto } from "../types/ticket.dto";
+import type { TicketModel } from "../types/ticket.model";
 
 class TicketsService {
   // region Service Methods
   public async getUserTickets(): Promise<PaginatedResponse<TicketModel>> {
-    const response = await ticketsApi.getUserTickets()
+    const response = await ticketsApi.getUserTickets();
 
-    return this._convertToPaginatedTickets(response)
+    return this._convertToPaginatedTickets(response);
   }
   // endregion
 
@@ -26,17 +26,21 @@ class TicketsService {
       priorityId: dto.fkPriorityId,
       createdAt: new Date(dto.createDateTime),
       createdAtFa: dto.persianCreateDate,
-      isActive: dto.isActive
-    }
+      isActive: dto.isActive,
+    };
   }
 
-  private _convertToPaginatedTickets(response: PaginatedResponse<TicketDto>): PaginatedResponse<TicketModel> {
+  private _convertToPaginatedTickets(
+    response: PaginatedResponse<TicketDto>,
+  ): PaginatedResponse<TicketModel> {
     return {
       ...response,
-      items: response.items.map((ticket) => this._convertTicketDtoToTicketModel(ticket))
-    }
+      items: response.items.map((ticket) =>
+        this._convertTicketDtoToTicketModel(ticket),
+      ),
+    };
   }
-//   endregion
+  //   endregion
 }
 
-export const ticketsService = new TicketsService()
+export const ticketsService = new TicketsService();

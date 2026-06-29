@@ -5,6 +5,8 @@
   "scripts": {
     "build": "nuxt build",
     "dev": "nuxt dev",
+    "format": "prettier . --write",
+    "format:check": "prettier . --check",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare"
@@ -21,6 +23,7 @@
   },
   "devDependencies": {
     "@types/lodash": "latest",
+    "prettier": "^3.9.1",
     "typescript": "latest",
     "vue-tsc": "latest"
   }
