@@ -3,14 +3,14 @@ export interface BackendResponse<T> {
   isSuccess: boolean;
   data: T;
   customMessage: string | null;
-  errors: any;
+  errors: unknown;
   traceId: string | null;
   message: string;
 }
 
 export class ApiError extends Error {
   readonly code: number;
-  readonly errors: any;
+  readonly errors: unknown;
   readonly traceId: string | null;
 
   constructor(response: BackendResponse<unknown>) {

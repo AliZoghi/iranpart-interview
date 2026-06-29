@@ -14,7 +14,7 @@ export interface TicketDto {
 
   fkRegisterPersonId: number;
 
-  messages: any[];
+  messages: unknown[];
 
   isActive: boolean;
   isTrashed: boolean;
