@@ -4,12 +4,21 @@ import type { DataTableColumn, DataTableRow } from "./data-table.types";
 defineProps<{
   columns: DataTableColumn[];
   rows: DataTableRow[];
+  fixedLayout?: boolean;
+}>();
+
+const emit = defineEmits<{
+  rowClick: [row: DataTableRow];
 }>();
 </script>
 
 <template>
-  <div class="-mx-px overflow-x-auto">
-    <table class="w-full min-w-[720px] border-collapse text-right">
+  <div class="overflow-x-auto">
+    <table
+      dir="rtl"
+      class="w-full border-collapse text-right"
+      :class="fixedLayout ? 'table-fixed' : 'min-w-[720px]'"
+    >
       <thead>
         <tr
           class="border-b border-gray-100 text-[10px] font-black uppercase text-gray-400 dark:border-white/5"
@@ -17,7 +26,7 @@ defineProps<{
           <th
             v-for="column in columns"
             :key="column.key"
-            :class="['px-4 py-4 md:p-6', column.headerClass]"
+            :class="['px-4 py-4 xl:px-6 xl:py-6', column.headerClass]"
           >
             {{ column.label }}
           </th>
@@ -28,11 +37,12 @@ defineProps<{
           v-for="(row, rowIndex) in rows"
           :key="String(row.id ?? rowIndex)"
           class="group cursor-pointer transition-colors hover:bg-primary-500/[0.02]"
+          @click="emit('rowClick', row)"
         >
           <td
             v-for="column in columns"
             :key="column.key"
-            :class="['px-4 py-4 md:p-6', column.cellClass]"
+            :class="['px-4 py-4 xl:px-6 xl:py-6', column.cellClass]"
           >
             <slot
               :name="`cell-${column.key}`"
