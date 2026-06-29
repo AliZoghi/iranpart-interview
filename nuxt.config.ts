@@ -1,13 +1,10 @@
-import {
-  DEFAULT_API_BASE_URL,
-  DEFAULT_PAGE_SIZE,
-} from "./src/core/constants";
+import { DEFAULT_API_BASE_URL, DEFAULT_PAGE_SIZE } from "./src/core/constants";
 
 export default defineNuxtConfig({
   srcDir: "src/",
   compatibilityDate: "2026-06-29",
   devtools: { enabled: true },
-  modules: ["@nuxtjs/tailwindcss", "@pinia/nuxt"],
+  modules: ["@nuxt/eslint", "@nuxtjs/tailwindcss", "@pinia/nuxt"],
   css: ["~/assets/css/tailwind.css"],
   imports: {
     dirs: ["modules/**/composables"],
