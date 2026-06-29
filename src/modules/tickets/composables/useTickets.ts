@@ -1,11 +1,14 @@
-import { debounce } from "lodash";
+import debounce from "lodash/debounce";
 import type { LocationQueryRaw } from "vue-router";
 import type { PaginatedResponse } from "~/core/api/pagination";
 import { DEFAULT_PAGE } from "~/core/constants";
 import { ticketsService } from "../services/tickets.service";
 import type { TicketModel } from "../types/ticket.model";
 import type { TicketsQueryParams } from "../types/ticket.query";
-import { formatTicketDisplayId, resolveTicketDisplayDate } from "../utils/ticket-display";
+import {
+  formatTicketDisplayId,
+  resolveTicketDisplayDate,
+} from "../utils/ticket-display";
 import {
   buildTicketsRouteQuery,
   isSameTicketsRouteQuery,

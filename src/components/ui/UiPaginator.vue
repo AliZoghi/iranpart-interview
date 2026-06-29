@@ -50,7 +50,10 @@ const paginationItems = computed(() =>
       </svg>
     </button>
 
-    <template v-for="item in paginationItems" :key="item.type === 'page' ? `page-${item.page}` : item.key">
+    <template
+      v-for="item in paginationItems"
+      :key="item.type === 'page' ? `page-${item.page}` : item.key"
+    >
       <span
         v-if="item.type === 'ellipsis'"
         class="flex h-8 w-8 shrink-0 items-center justify-center text-[10px] font-black text-gray-400"
