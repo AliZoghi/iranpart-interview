@@ -2,6 +2,9 @@ import { DEFAULT_API_BASE_URL, DEFAULT_PAGE_SIZE } from "./src/core/constants";
 
 export default defineNuxtConfig({
   srcDir: "src/",
+  app: {
+    baseURL: process.env.NUXT_APP_BASE_URL || "/",
+  },
   compatibilityDate: "2026-06-29",
   devtools: { enabled: true },
   modules: ["@nuxt/eslint", "@nuxtjs/tailwindcss", "@pinia/nuxt"],

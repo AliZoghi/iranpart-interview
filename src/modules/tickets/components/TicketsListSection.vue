@@ -34,7 +34,9 @@ const emit = defineEmits<{
 
     <template v-else>
       <!-- Cards below 1200px -->
-      <div class="divide-y divide-gray-50 dark:divide-white/5 min-[1200px]:hidden">
+      <div
+        class="divide-y divide-gray-50 dark:divide-white/5 min-[1200px]:hidden"
+      >
         <article
           v-for="row in rows"
           :key="String(row.id)"

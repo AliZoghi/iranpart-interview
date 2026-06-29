@@ -1,6 +1,5 @@
 export type PaginatorItem =
-  | { type: "page"; page: number }
-  | { type: "ellipsis"; key: string };
+  { type: "page"; page: number } | { type: "ellipsis"; key: string };
 
 export function buildPaginatorItems(
   currentPage: number,

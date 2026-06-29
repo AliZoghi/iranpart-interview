@@ -66,7 +66,11 @@ function parseJsonObject(value: unknown): Record<string, unknown> | null {
   try {
     const parsed: unknown = JSON.parse(value);
 
-    if (typeof parsed !== "object" || parsed === null || Array.isArray(parsed)) {
+    if (
+      typeof parsed !== "object" ||
+      parsed === null ||
+      Array.isArray(parsed)
+    ) {
       return null;
     }
 
@@ -100,7 +104,9 @@ export function parseFilterQueryParam(value: unknown): TicketsRouteFilter {
   return filter;
 }
 
-export function parsePaginationQueryParam(value: unknown): TicketsRoutePagination {
+export function parsePaginationQueryParam(
+  value: unknown,
+): TicketsRoutePagination {
   const parsed = parseJsonObject(value);
   const pageValue = parsed?.page;
   const page = Number(pageValue);

@@ -37,9 +37,7 @@ withDefaults(
     <div class="overflow-x-auto">
       <table class="w-full table-fixed border-collapse text-right">
         <thead>
-          <tr
-            class="border-b border-gray-100 dark:border-white/5"
-          >
+          <tr class="border-b border-gray-100 dark:border-white/5">
             <th
               v-for="column in TICKET_TABLE_COLUMNS"
               :key="column.key"

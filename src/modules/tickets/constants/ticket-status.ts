@@ -14,8 +14,7 @@ export const TICKET_STATUS = {
   CLOSED: TicketStatus.Closed,
 } as const;
 
-export type TicketStatusId =
-  (typeof TICKET_STATUS)[keyof typeof TICKET_STATUS];
+export type TicketStatusId = (typeof TICKET_STATUS)[keyof typeof TICKET_STATUS];
 
 export interface TicketStatusFilter {
   label: string;

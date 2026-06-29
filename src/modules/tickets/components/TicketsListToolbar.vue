@@ -57,7 +57,7 @@ function isActive(filter: TicketStatusFilter) {
         placeholder="جستجو در تیکت‌ها..."
         class="w-full cursor-text rounded-2xl border border-white/60 bg-white/40 py-3 pl-11 pr-5 text-[11px] font-bold text-gray-900 caret-primary-500 outline-none transition-all placeholder:text-gray-400 focus:border-primary-500/50 dark:border-white/10 dark:bg-white/5 dark:text-white dark:placeholder:text-gray-500"
         @input="onSearchInput"
-      >
+      />
       <svg
         class="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400"
         fill="none"
