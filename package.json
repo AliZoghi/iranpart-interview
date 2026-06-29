@@ -23,6 +23,7 @@
   },
   "devDependencies": {
     "@types/lodash": "latest",
+    "@types/node": "^26.0.1",
     "prettier": "^3.9.1",
     "typescript": "latest",
     "vue-tsc": "latest"

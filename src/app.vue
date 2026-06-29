@@ -15,14 +15,14 @@ const { tickets, pagination, loading, error, fetchTickets } = useTickets();
           <h1 class="mt-2 text-3xl font-bold">User tickets</h1>
         </div>
 
-        <button
-          class="rounded-md bg-cyan-400 px-4 py-2 font-semibold text-slate-950 transition hover:bg-cyan-300 disabled:cursor-not-allowed disabled:opacity-60"
-          type="button"
-          :disabled="loading"
-          @click="fetchTickets"
-        >
-          {{ loading ? "Loading..." : "Fetch tickets" }}
-        </button>
+<!--        <button-->
+<!--          class="rounded-md bg-cyan-400 px-4 py-2 font-semibold text-slate-950 transition hover:bg-cyan-300 disabled:cursor-not-allowed disabled:opacity-60"-->
+<!--          type="button"-->
+<!--          :disabled="loading"-->
+<!--          @click="fetchTickets"-->
+<!--        >-->
+<!--          {{ loading ? "Loading..." : "Fetch tickets" }}-->
+<!--        </button>-->
       </header>
 
       <p
@@ -32,10 +32,10 @@ const { tickets, pagination, loading, error, fetchTickets } = useTickets();
         {{ error }}
       </p>
 
-      <div v-if="pagination" class="text-sm text-slate-400">
-        Page {{ pagination.page }} of {{ pagination.totalPages }} ·
-        {{ pagination.total }} tickets
-      </div>
+<!--      <div v-if="pagination" class="text-sm text-slate-400">-->
+<!--        Page {{ pagination.page }} of {{ pagination.totalPages }} ·-->
+<!--        {{ pagination.total }} tickets-->
+<!--      </div>-->
 
       <div class="grid gap-4">
         <article
