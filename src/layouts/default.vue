@@ -1,9 +1,9 @@
 <template>
   <div class="flex min-h-screen flex-col">
-    <LayoutAppNavbar />
-    <main class="flex flex-1 flex-col">
+    <AppNavbar />
+    <main class="flex min-h-0 flex-1 flex-col">
       <slot />
     </main>
-    <LayoutAppFooter />
+    <AppFooter />
   </div>
 </template>

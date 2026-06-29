@@ -1,17 +1,47 @@
 <script setup lang="ts">
-const { tickets, error, fetchTickets } = useTickets();
+definePageMeta({
+  layout: "dashboard",
+});
+
+const {
+  tableRows,
+  pagination,
+  loading,
+  error,
+  search,
+  selectedStatusId,
+  fetchTickets,
+  setSearch,
+  setSelectedStatusId,
+  setPage,
+} = useTickets();
 
 await fetchTickets();
 </script>
 
 <template>
-  <section class="flex-1 bg-slate-900 p-6">
-    <p v-if="error">{{ error }}</p>
+  <main class="flex-1 space-y-8 p-6">
+    <div class="space-y-6" dir="rtl">
+      <TicketsPageHeader />
 
-    <ul>
-      <li v-for="ticket in tickets" :key="ticket.id">
-        {{ ticket.title }}
-      </li>
-    </ul>
-  </section>
+      <TicketsListToolbar
+        :search="search"
+        :selected-status-id="selectedStatusId"
+        @update:search="setSearch"
+        @update:selected-status-id="setSelectedStatusId"
+      />
+
+      <p v-if="error" class="px-2 text-[11px] font-bold text-red-400">
+        {{ error }}
+      </p>
+
+      <TicketsListSection
+        :rows="tableRows"
+        :page="pagination?.page ?? 1"
+        :total-pages="pagination?.totalPages ?? 0"
+        :loading="loading"
+        @update:page="setPage"
+      />
+    </div>
+  </main>
 </template>
