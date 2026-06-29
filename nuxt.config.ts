@@ -6,6 +6,9 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   modules: ["@nuxt/eslint", "@nuxtjs/tailwindcss", "@pinia/nuxt"],
   css: ["~/assets/css/tailwind.css"],
+  routeRules: {
+    "/dashboard": { redirect: "/dashboard/tickets" },
+  },
   imports: {
     dirs: ["modules/**/composables"],
   },
