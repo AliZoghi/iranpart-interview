@@ -1,21 +1,26 @@
 import type { PaginatedResponse } from "~/core/api/pagination";
+import { DEFAULT_PAGE } from "~/core/constants";
 import { ticketsService } from "../services/tickets.service";
 import type { TicketModel } from "../types/ticket.model";
 
 type TicketsPagination = Omit<PaginatedResponse<TicketModel>, "items">;
 
 export function useTickets() {
+  const config = useRuntimeConfig();
   const tickets = ref<TicketModel[]>([]);
   const pagination = ref<TicketsPagination | null>(null);
   const loading = ref(false);
   const error = ref<string | null>(null);
 
-  async function fetchTickets() {
+  async function fetchTickets(page = DEFAULT_PAGE) {
     loading.value = true;
     error.value = null;
 
     try {
-      const response = await ticketsService.getUserTickets();
+      const response = await ticketsService.getUserTickets({
+        page,
+        perPage: config.public.defaultPageSize,
+      });
 
       tickets.value = response.items;
       pagination.value = {

@@ -1,12 +1,17 @@
-import type { PaginatedResponse } from "~/core/api/pagination";
+import type {
+  PaginatedResponse,
+  PaginationParams,
+} from "~/core/api/pagination";
 import { ticketsApi } from "../api/tickets.api";
 import type { TicketDto } from "../types/ticket.dto";
 import type { TicketModel } from "../types/ticket.model";
 
 class TicketsService {
   // region Service Methods
-  public async getUserTickets(): Promise<PaginatedResponse<TicketModel>> {
-    const response = await ticketsApi.getUserTickets();
+  public async getUserTickets(
+    params?: PaginationParams,
+  ): Promise<PaginatedResponse<TicketModel>> {
+    const response = await ticketsApi.getUserTickets(params);
 
     return this._convertToPaginatedTickets(response);
   }
