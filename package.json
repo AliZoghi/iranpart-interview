@@ -1,0 +1,27 @@
+{
+  "name": "iranpart-interview",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare"
+  },
+  "dependencies": {
+    "@nuxtjs/tailwindcss": "latest",
+    "@pinia/nuxt": "latest",
+    "axios": "latest",
+    "lodash": "latest",
+    "nuxt": "latest",
+    "pinia": "latest",
+    "vue": "latest",
+    "vue-router": "latest"
+  },
+  "devDependencies": {
+    "@types/lodash": "latest",
+    "typescript": "latest",
+    "vue-tsc": "latest"
+  }
+}
