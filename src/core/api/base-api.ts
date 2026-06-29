@@ -2,17 +2,23 @@ import axios from "axios";
 import type { AxiosInstance, AxiosRequestConfig } from "axios";
 import { ApiError, type BackendResponse } from "./api-types";
 
-export const DEFAULT_API_BASE_URL = "http://api.fixent.ir/api";
-
 export class BaseApi {
-  private readonly client: AxiosInstance;
+  private client: AxiosInstance | undefined;
   private readonly controller: string;
 
-  constructor(controller = "", baseURL = DEFAULT_API_BASE_URL) {
+  constructor(controller: string) {
     this.controller = this._normalizePath(controller);
-    this.client = axios.create({
-      baseURL,
-    });
+  }
+
+  private _getClient(): AxiosInstance {
+    if (!this.client) {
+      const { public: config } = useRuntimeConfig();
+      this.client = axios.create({
+        baseURL: config.apiBase,
+      });
+    }
+
+    return this.client;
   }
 
   protected get<T>(url: string, config?: AxiosRequestConfig): Promise<T> {
@@ -58,7 +64,8 @@ export class BaseApi {
   }
 
   private async _request<T>(config: AxiosRequestConfig): Promise<T> {
-    const response = await this.client.request<BackendResponse<T>>(config);
+    const response =
+      await this._getClient().request<BackendResponse<T>>(config);
     const payload = response.data;
 
     if (!payload.isSuccess) {

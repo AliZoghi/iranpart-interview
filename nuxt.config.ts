@@ -1,3 +1,8 @@
+import {
+  DEFAULT_API_BASE_URL,
+  DEFAULT_PAGE_SIZE,
+} from "./src/core/constants";
+
 export default defineNuxtConfig({
   srcDir: "src/",
   compatibilityDate: "2026-06-29",
@@ -9,7 +14,10 @@ export default defineNuxtConfig({
   },
   runtimeConfig: {
     public: {
-      apiBase: "http://api.fixent.ir/api",
+      apiBase: process.env.NUXT_PUBLIC_API_BASE || DEFAULT_API_BASE_URL,
+      defaultPageSize: Number(
+        process.env.NUXT_PUBLIC_DEFAULT_PAGE_SIZE || DEFAULT_PAGE_SIZE,
+      ),
     },
   },
   typescript: {

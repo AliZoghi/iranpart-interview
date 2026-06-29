@@ -1,5 +1,8 @@
 import { BaseApi } from "~/core/api/base-api";
-import type { PaginatedResponse } from "~/core/api/pagination";
+import type {
+  PaginatedResponse,
+  PaginationParams,
+} from "~/core/api/pagination";
 import type { TicketDto } from "../types/ticket.dto";
 
 class TicketsApi extends BaseApi {
@@ -7,8 +10,10 @@ class TicketsApi extends BaseApi {
     super("Ticket");
   }
 
-  public getUserTickets(): Promise<PaginatedResponse<TicketDto>> {
-    return this.get<PaginatedResponse<TicketDto>>("user-tickets");
+  public getUserTickets(
+    params?: PaginationParams,
+  ): Promise<PaginatedResponse<TicketDto>> {
+    return this.get<PaginatedResponse<TicketDto>>("user-tickets", { params });
   }
 }
 
